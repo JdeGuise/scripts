@@ -7,49 +7,34 @@ from docx.shared import Pt
 # 3 position name (lowercase)
 # 4 company name (again Capitalized)
 
-print "Enter company name (required)"
+print("Enter company name (required)")
+company_name = input()
 
-company_name = raw_input()
+print("\nEnter job location (Capitalized, either as a region, city, or state)")
+job_location = input()
 
-print "Enter job location (Capitalized, either as a region, city, or state)"
+print("\nEnter position name")
+position_name = input()
 
-job_location = raw_input()
+print("\nParams provided:")
+print("Company Name: ", company_name)
+print("Location: ", job_location)
+print("Position Name: ", position_name)
 
-print "Enter position name"
-
-position_name = raw_input().lower()
-
-print company_name
-print job_location
-print position_name
-
-
-# lazy... boooooo
-AAAA_flag = False
-AAAA1 = "To the Hiring Manager at ", company_name, ","
-AAAA2 = "I look forward to the opportunity to show you how I can benefit the ", company_name, " team."
-BBBB_CCCC = "I am a Michigan-based computer science graduate interested in relocation to ", job_location, ".  I believe that I provide the specialized skills that you are seeking for the ", position_name, " position, and I believe that I would make a valuable addition to the company."
-
-#
-# Store these pieces of information as 4 lines with the first line as the name of the file
-# Use this file to feed into update_cl.py as a with('open' -r): call
-# load into variables
-# iterate over our 4 regexes and replace them
+OPENING_STATEMENT = "To the Hiring Manager at ", company_name, ","
+CLOSING_STATEMENT = "I look forward to the opportunity to show you how I can benefit the ", company_name, " team."
+INTRODUCTORY_STATEMENT = "I am an Utrecht-based Salesforce Developer looking for the next big opportunity to grow my technical skills and contribute meaningfully. After reviewing the description, I believe that I provide the specialized skills that you are seeking for your ", position_name, " position, and I would like to share more about the value I can contribute to ", company_name, "."
 
 document = Document('JdeGuiseCL-General.docx')
-
 for paragraph in document.paragraphs:
-	if 'AAAA' in paragraph.text:
-		if AAAA_flag is True:
-			paragraph.text = AAAA2
-		else:
-			paragraph.text = AAAA1
-			AAAA_flag = True
-	if 'BBBB' in paragraph.text and 'CCCC' in paragraph.text:
-		paragraph.text = BBBB_CCCC
-
-for paragraph in document.paragraphs:
-	print paragraph.text
+	if 'COMPANY_NAME_1' in paragraph.text:
+		paragraph.text = OPENING_STATEMENT
+	elif 'COMPANY_NAME_2' in paragraph.text and 'POSITION_NAME' in paragraph.text:
+		paragraph.text = INTRODUCTORY_STATEMENT
+	elif 'COMPANY_NAME_3' in paragraph.text:
+		paragraph.text = CLOSING_STATEMENT
 
 save_name = "JdeGuiseCL-%s.docx" % (company_name.replace(" ", ""))
 document.save(save_name)
+
+print("Done! Document saved as", save_name)
