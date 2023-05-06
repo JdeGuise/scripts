@@ -17,7 +17,6 @@ process_file () {
 	cd /home/pi/scripts/nextcloud_media_syncing 
 	source /home/pi/scripts/nextcloud_media_syncing/.venv/bin/activate
 
-	# TODO: parse out new path on windows pc hard drive for slack msg
 	# TODO: embed the new image into the slack message
 	cmdOutput=$(sshpass -p $WINDOWS_PASS scp -r /var/nextcloud/data/gans/files/InstantUpload/Camera/* johnr@192.168.1.11:C:/PhotoPrism/originals/Camera 2>&1)
 

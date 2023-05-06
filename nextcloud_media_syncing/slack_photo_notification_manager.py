@@ -12,10 +12,13 @@ client = WebClient(token=slack_token)
 success_msg="A new photo has been saved to your PhotoPrism folder on GoosePC"
 error_msg="An error was encountered while trying to save new media to your PhotoPrism folder on GoosePC.\nFile path on phone: " + sys.argv[2]
 
+computer_file_path = "C:\PhotoPrism\originals\Camera\\" + (sys.argv[2].split('InstantUpload/Camera/')[1].replace("/", "\\"))
+
 is_success = True if sys.argv[1] == 'true' else False 
 if is_success:
     MSG = success_msg
-    MSG+=("\nFile path on phone: " + sys.argv[2])
+    MSG+=("\nFile path on Nextcloud: " + sys.argv[2])
+    MSG+=("\nFile path on GoosePC: " + computer_file_path)
 else:
     error_from_bash = [" ".join(sys.argv[3:])]
     MSG = error_msg
