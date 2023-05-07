@@ -17,7 +17,6 @@ process_file () {
 	cd /home/pi/scripts/nextcloud_media_syncing 
 	source /home/pi/scripts/nextcloud_media_syncing/.venv/bin/activate
 
-	# TODO: embed the new image into the slack message
 	cmdOutput=$(sshpass -p $WINDOWS_PASS scp -r /var/nextcloud/data/gans/files/InstantUpload/Camera/* johnr@192.168.1.11:C:/PhotoPrism/originals/Camera 2>&1)
 
 	if [ -z "${cmdOutput}" ]; 
@@ -34,10 +33,10 @@ process_file () {
 inotifywait -m -r /var/nextcloud/data/gans/files/InstantUpload -e create |
 	while read path action file; do
 		SEPARATOR='.ocTransferId'
-		EXTENSION='jpg'
+		EXTENSION_JPG='jpg'
+		EXTENSION_MP4='mp4'
 
-		if [[ "$file" =~ .*"$EXTENSION".* ]]; then
-			sleep 5
+		if [[ "$file" =~ .*"$EXTENSION_JPG".* || "$file" =~ .*"$EXTENSION_MP4".* ]]; then
 			process_file $file $path $SEPARATOR
 		fi
 	done
