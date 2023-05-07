@@ -17,12 +17,12 @@ computer_file_path = "C:\PhotoPrism\originals\Camera\\" + (sys.argv[2].split('In
 is_success = True if sys.argv[1] == 'true' else False 
 if is_success:
     MSG = success_msg
-    MSG+=("\nFile path on Nextcloud: \n" + sys.argv[2])
-    MSG+=("\nFile path on GoosePC: \n" + computer_file_path)
+    MSG+=("\n*File path on Nextcloud:* \n" + sys.argv[2])
+    MSG+=("\n*File path on GoosePC:* \n" + computer_file_path)
 else:
     error_from_bash = [" ".join(sys.argv[3:])]
     MSG = error_msg
-    MSG+=("\nError message: \n'" + error_from_bash[0] + "'")
+    MSG+=("\n*Error message:* \n'" + error_from_bash[0] + "'")
 
 response = client.chat_postMessage(
     channel=os.getenv("CHANNEL_ID"),
@@ -33,6 +33,6 @@ response = client.chat_postMessage(
 # Uploading files requires the `files:write` scope
 response = client.files_upload_v2(
     channel=os.getenv("CHANNEL_ID"),
-    initial_comment="Transferred file:",
+    initial_comment="*Transferred file:*",
     file=sys.argv[2],
 )
